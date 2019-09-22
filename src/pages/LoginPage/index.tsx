@@ -9,14 +9,14 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  login: (username: string, password: string) => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
 }
 
 type Props = StateProps & DispatchProps;
 
 interface State {
-  username: string;
+  email: string;
   password: string;
   submitted: boolean;
 }
@@ -28,15 +28,15 @@ class LoginPage extends React.Component<Props, State> {
     this.props.logout();
 
     this.state = {
-      username: "",
+      email: "",
       password: "",
       submitted: false
     };
   }
 
-  handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
+  handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    this.setState({ username: value });
+    this.setState({ email: value });
   };
 
   handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,32 +48,30 @@ class LoginPage extends React.Component<Props, State> {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { username, password } = this.state;
-    if (username && password) {
-      this.props.login(username, password);
+    const { email, password } = this.state;
+    if (email && password) {
+      this.props.login(email, password);
     }
   };
 
   render() {
-    const { username, password, submitted } = this.state;
+    const { email, password, submitted } = this.state;
     return (
       <div className="col-md-6 col-md-offset-3">
         <h2>Login</h2>
         <form name="form" onSubmit={this.handleSubmit}>
           <div
-            className={
-              "form-group" + (submitted && !username ? " has-error" : "")
-            }
+            className={"form-group" + (submitted && !email ? " has-error" : "")}
           >
             <label htmlFor="email">E-mail</label>
             <input
               type="text"
               className="form-control"
-              name="username"
-              value={username}
-              onChange={this.handleChangeUsername}
+              name="email"
+              value={email}
+              onChange={this.handleChangeEmail}
             />
-            {submitted && !username && (
+            {submitted && !email && (
               <div className="help-block">E-mail is required</div>
             )}
           </div>
@@ -111,8 +109,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  login: (username: string, password: string) =>
-    dispatch(login(username, password)),
+  login: (email: string, password: string) => dispatch(login(email, password)),
   logout: () => dispatch(logout())
 });
 

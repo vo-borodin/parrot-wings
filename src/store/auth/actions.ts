@@ -3,14 +3,14 @@ import * as api from "../../api";
 import * as alertActions from "../alert/actions";
 import { history } from "../../helpers/history";
 
-export const login = (username: string, password: string) => {
+export const login = (email: string, password: string) => {
   return (dispatch: any) => {
     dispatch({
       type: actionTypes.LOGIN_REQUEST,
-      user: { username }
+      user: { email }
     });
 
-    api.login(username, password).then(
+    api.login(email, password).then(
       user => {
         dispatch({
           type: actionTypes.LOGIN_SUCCESS,

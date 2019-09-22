@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
+import { AlertState } from "./models";
 
-export function alert(state = {}, action: any) {
+export function alert(state: AlertState = {}, action: any) {
   switch (action.type) {
     case actionTypes.ALERT_SUCCESS:
       return {

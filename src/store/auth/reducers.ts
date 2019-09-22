@@ -1,10 +1,11 @@
 import * as actionTypes from "./actionTypes";
+import { AuthState } from "./models";
 
 const item = localStorage.getItem("user");
 let user = item ? JSON.parse(item) : null;
 const initialState = user ? { loggedIn: true, user } : {};
 
-export function authentication(state = initialState, action: any) {
+export function authentication(state: AuthState = initialState, action: any) {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
       return {
