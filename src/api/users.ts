@@ -13,7 +13,7 @@ export const login = async (email: string, password: string) => {
 
   const user = await handleResponse(response);
   // login successful if there's a jwt token in the response
-  if (user.token) {
+  if (user.id_token) {
     // store user details and jwt token in local storage to keep user logged in between page refreshes
     localStorage.setItem("user", JSON.stringify(user));
   }
@@ -36,13 +36,33 @@ export const logout = () => {
   localStorage.removeItem("user");
 };
 
+export const getUserInfo = async () => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: authHeader()
+    }
+  };
+
+  const response = await fetch(
+    `${baseUrl}/api/protected/user-info`,
+    requestOptions
+  );
+  const resp = await handleResponse(response);
+  return {
+    id: resp.user_info_token.id,
+    username: resp.user_info_token.name,
+    email: resp.user_info_token.email,
+    balance: resp.user_info_token.balance
+  };
+};
+
 export const handleResponse = async (response: Response) => {
   const text = await response.text();
   if (!response.ok) {
     if (response.status === 401) {
       // auto logout if 401 response returned from api
       logout();
-      window.location.reload(true);
     }
     const error = text;
     return Promise.reject(error);

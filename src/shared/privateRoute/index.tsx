@@ -11,7 +11,9 @@ export const PrivateRoute = ({ component, ...rest }: RouteProps) => {
     if (localStorage.getItem("user")) {
       return <Component {...props} />;
     }
-    return <Redirect to={{ pathname: "/login" }} />;
+    return (
+      <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
+    );
   };
 
   return <Route {...rest} render={render} />;

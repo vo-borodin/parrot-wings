@@ -37,10 +37,10 @@ export const register = (user: any) => {
     });
 
     api.register(user).then(
-      (user: any) => {
+      (id_token: string) => {
         dispatch({
           type: actionTypes.REGISTER_SUCCESS,
-          user
+          user: { ...user, token: id_token }
         });
         history.push("/login");
         dispatch(alertActions.success("Registration successful"));

@@ -1,0 +1,15 @@
+.home-page {
+  &__top-bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__info {
+    font-size: x-large;
+
+    span:first-child {
+      margin-right: 1em;
+    }
+  }
+}
