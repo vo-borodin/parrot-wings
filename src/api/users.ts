@@ -1,6 +1,5 @@
 import { authHeader } from "../helpers/auth-header";
-
-const baseUrl = "http://193.124.114.46:3001";
+import { baseUrl, handleResponse } from './shared';
 
 export const login = async (email: string, password: string) => {
   const requestOptions = {
@@ -40,6 +39,7 @@ export const getUserInfo = async () => {
   const requestOptions = {
     method: "GET",
     headers: {
+      "Content-Type": "application/json",
       Authorization: authHeader()
     }
   };
@@ -57,16 +57,19 @@ export const getUserInfo = async () => {
   };
 };
 
-export const handleResponse = async (response: Response) => {
-  const text = await response.text();
-  if (!response.ok) {
-    if (response.status === 401) {
-      // auto logout if 401 response returned from api
-      logout();
-    }
-    const error = text;
-    return Promise.reject(error);
-  }
-  const data = text && JSON.parse(text);
-  return data;
+export const getAll = async () => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: authHeader()
+    },
+    body: JSON.stringify({ filter: " " })
+  };
+
+  const response = await fetch(
+    `${baseUrl}/api/protected/users/list`,
+    requestOptions
+  );
+  return handleResponse(response);
 };

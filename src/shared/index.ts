@@ -1,3 +1,4 @@
 import { PrivateRoute } from "./privateRoute";
+import { UserSelector } from "./userSelector";
 
-export { PrivateRoute };
+export { PrivateRoute, UserSelector };

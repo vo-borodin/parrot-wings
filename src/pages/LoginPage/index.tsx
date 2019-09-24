@@ -58,6 +58,7 @@ class LoginPage extends React.Component<Props, State> {
     const { email, password, submitted } = this.state;
     return (
       <div className="col-md-6 col-md-offset-3">
+        <h1>Parrot Wings</h1>
         <h2>Login</h2>
         <form name="form" onSubmit={this.handleSubmit}>
           <div

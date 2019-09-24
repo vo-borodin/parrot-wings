@@ -1,3 +1,4 @@
-import { login, register, logout } from "./users";
+import { login, register, getUserInfo, getAll, logout } from "./users";
+import { commitTransaction } from "./transaction";
 
-export { login, register, logout };
+export { login, register, getUserInfo, getAll, logout, commitTransaction };
