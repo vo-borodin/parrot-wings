@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { logout, login } from '../../store/auth/actions'
 import { GlobalState } from '../../store/models'
+import { history } from '../../helpers/history'
 
 interface StateProps {
   authenticating: boolean
@@ -52,6 +53,9 @@ class LoginPage extends React.Component<Props, State> {
     const { email, password } = this.state
     if (email && password) {
       this.props.login(email, password)
+      setTimeout(() => {
+        history.push('/')
+      }, 3000)
     }
   }
 

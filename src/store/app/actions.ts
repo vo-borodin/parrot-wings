@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes'
 import * as api from '../../api'
-import { history } from '../../helpers/history'
+import * as alertActions from '../alert/actions'
 
 export const getUserInfo = () => {
   return (dispatch: any) => {
@@ -9,10 +9,10 @@ export const getUserInfo = () => {
     })
 
     api.getUserInfo().then(
-      user =>
+      payload =>
         dispatch({
           type: actionTypes.GET_USER_INFO_SUCCESS,
-          user
+          payload
         }),
       error =>
         dispatch({
@@ -45,22 +45,23 @@ export const getAllUsers = () => {
 }
 
 export const commitTransaction = (name: string, amount: number) => {
-  ;(dispatch: any) => {
+  return (dispatch: any) => {
     dispatch({ type: actionTypes.COMMIT_TRANSACTION_REQUEST })
 
     api.commitTransaction(name, amount).then(
-      transaction => {
+      balance => {
         dispatch({
           type: actionTypes.COMMIT_TRANSACTION_SUCCESS,
-          transaction
+          balance
         })
-        // history.push('/')
+        dispatch(alertActions.success('Transaction is done'))
       },
       error => {
         dispatch({
           type: actionTypes.COMMIT_TRANSACTION_ERROR,
           error
         })
+        dispatch(alertActions.error(`Transaction is failed: ${error}`))
       }
     )
   }

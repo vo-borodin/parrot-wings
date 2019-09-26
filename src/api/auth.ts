@@ -49,7 +49,6 @@ export const getUserInfo = async () => {
   )
   const resp = await handleResponse(response)
   return {
-    id: resp.user_info_token.id,
     username: resp.user_info_token.name,
     email: resp.user_info_token.email,
     balance: resp.user_info_token.balance

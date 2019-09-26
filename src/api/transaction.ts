@@ -16,7 +16,7 @@ export const commitTransaction = async (name: string, amount: number) => {
     requestOptions
   );
   const resp = await handleResponse(response);
-  return resp.trans_token;
+  return resp.trans_token.balance;
 };
 
 export const fetchTransactions = async () => {

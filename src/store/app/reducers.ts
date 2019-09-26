@@ -15,29 +15,50 @@ export const appReducer = (state: AppState = initialState, action: any) => {
     case actionTypes.GET_USER_INFO_SUCCESS:
       return {
         ...state,
-        currentUser: action.user,
-        balance: action.balance
+        currentUser: {
+          email: action.payload.email,
+          username: action.payload.username
+        },
+        balance: action.payload.balance
       }
     case actionTypes.GET_USER_INFO_FAILURE:
-      return state
+      return {
+        ...state,
+        currentUser: undefined,
+        balance: 0
+      }
     case actionTypes.GET_ALL_USERS_REQUEST:
-      return state
+      return {
+        ...state,
+        usersLoading: true
+      }
     case actionTypes.GET_ALL_USERS_SUCCESS:
       return {
         ...state,
+        usersLoading: false,
         users: action.users
       }
     case actionTypes.GET_ALL_USERS_FAILURE:
-      return state
+      return {
+        ...state,
+        usersLoading: false
+      }
     case actionTypes.COMMIT_TRANSACTION_REQUEST:
-      return state
+      return {
+        ...state,
+        transactionCommiting: true
+      }
     case actionTypes.COMMIT_TRANSACTION_SUCCESS:
       return {
         ...state,
+        transactionCommiting: false,
         balance: action.balance
       }
     case actionTypes.COMMIT_TRANSACTION_ERROR:
-      return state
+      return {
+        ...state,
+        transactionCommiting: false
+      }
     default:
       return state
   }
