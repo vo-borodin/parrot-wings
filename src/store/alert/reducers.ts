@@ -1,21 +1,25 @@
-import * as actionTypes from "./actionTypes";
-import { AlertState } from "./models";
+import * as actionTypes from './actionTypes'
+import { AlertState } from './models'
 
-export function alert(state: AlertState = {}, action: any) {
+export const alertReducer = (state: AlertState = {}, action: any) => {
   switch (action.type) {
     case actionTypes.ALERT_SUCCESS:
       return {
-        type: "alert-success",
-        message: action.message
-      };
+        alert: {
+          alertType: 'alert-success',
+          message: action.message
+        }
+      }
     case actionTypes.ALERT_ERROR:
       return {
-        type: "alert-danger",
-        message: action.message
-      };
+        alert: {
+          alertType: 'alert-danger',
+          message: action.message
+        }
+      }
     case actionTypes.ALERT_CLEAR:
-      return {};
+      return {}
     default:
-      return state;
+      return state
   }
 }

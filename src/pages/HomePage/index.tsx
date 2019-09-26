@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { logout } from "../../store/auth/actions";
 import { getUserInfo, getAll } from "../../api";
@@ -16,18 +16,23 @@ type Props = DispatchProps;
 interface State {
   user: any;
   payees: any[];
-  payeeId?: number;
+  payee?: string;
+  amount: number;
 }
 
 class HomePage extends React.Component<Props, State> {
-  state = {
-    user: {
-      username: "",
-      email: "",
-      balance: 0.0
-    },
-    payees: []
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      user: {
+        username: "",
+        email: "",
+        balance: 0.0
+      },
+      payees: [],
+      amount: 0
+    };
+  }
 
   onLogout = () => {
     this.props.logout();
@@ -47,12 +52,31 @@ class HomePage extends React.Component<Props, State> {
   }
 
   onSelectPayee = (item: any) => {
-    this.setState({ payeeId: item.value });
+    this.setState({ payee: item.label });
   };
 
-  onSetAmount = (amount: number) => {};
+  onSetAmount = (amount: number) => {
+    this.setState({ amount });
+  };
 
-  onSubmitTransaction = (event: FormEvent) => {};
+  onSubmitTransaction = () => {
+    const {
+      user: { balance },
+      payee,
+      amount
+    } = this.state;
+    if (Boolean(payee) && amount > 0 && amount <= balance) {
+    }
+  };
+
+  get isButtonDisabled(): boolean {
+    const {
+      user: { balance },
+      payee,
+      amount
+    } = this.state;
+    return !Boolean(payee) || amount === 0 || amount > balance;
+  }
 
   render() {
     const {
@@ -70,12 +94,16 @@ class HomePage extends React.Component<Props, State> {
             Logout
           </button>
         </div>
-        <div>
-          <form className="home-page__form" onSubmit={this.onSubmitTransaction}>
-            <UserSelector users={payees} onSelectItem={this.onSelectPayee} />
-            <NumberField onSetValue={this.onSetAmount} />
-            <button className="btn btn-primary">Send money</button>
-          </form>
+        <div className="home-page__form">
+          <UserSelector users={payees} onSelectItem={this.onSelectPayee} />
+          <NumberField onSetValue={this.onSetAmount} />
+          <button
+            className="btn btn-primary"
+            disabled={this.isButtonDisabled}
+            onClick={this.onSubmitTransaction}
+          >
+            Send money
+          </button>
         </div>
       </div>
     );

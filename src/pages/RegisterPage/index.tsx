@@ -1,79 +1,79 @@
-import React, { ChangeEvent, FormEvent } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { register } from "../../store/auth/actions";
+import React, { ChangeEvent, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { register } from '../../store/auth/actions'
 
 interface StateProps {
-  registering: boolean;
+  registering: boolean
 }
 
 interface DispatchProps {
-  register: (user: any) => void;
+  register: (user: any) => void
 }
 
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps
 
 interface State {
-  user: any;
-  passwordConfirmation: string;
-  submitted: boolean;
+  user: any
+  passwordConfirmation: string
+  submitted: boolean
 }
 
 class RegisterPage extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
 
     this.state = {
       user: {
-        username: "",
-        email: "",
-        password: ""
+        username: '',
+        email: '',
+        password: ''
       },
-      passwordConfirmation: "",
+      passwordConfirmation: '',
       submitted: false
-    };
+    }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    const { user } = this.state;
+    const { name, value } = event.target
+    const { user } = this.state
     this.setState({
       user: {
         ...user,
         [name]: value
       }
-    });
-  };
+    })
+  }
 
   handleChangePwdConfirmation = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+    const { value } = event.target
     this.setState({
       passwordConfirmation: value
-    });
-  };
+    })
+  }
 
   handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    this.setState({ submitted: true });
-    const { user } = this.state;
+    this.setState({ submitted: true })
+    const { user } = this.state
     if (user.username && user.email && user.password) {
-      this.props.register(user);
+      this.props.register(user)
     }
-  };
+  }
 
   render() {
-    const { registering } = this.props;
-    const { user, passwordConfirmation, submitted } = this.state;
+    const { registering } = this.props
+    const { user, passwordConfirmation, submitted } = this.state
     return (
       <div className="col-md-6 col-md-offset-3">
         <h2>Register</h2>
         <form name="form" onSubmit={this.handleSubmit}>
           <div
             className={
-              "form-group" + (submitted && !user.username ? " has-error" : "")
+              'form-group' + (submitted && !user.username ? ' has-error' : '')
             }
           >
             <label htmlFor="username">Username</label>
@@ -90,7 +90,7 @@ class RegisterPage extends React.Component<Props, State> {
           </div>
           <div
             className={
-              "form-group" + (submitted && !user.email ? " has-error" : "")
+              'form-group' + (submitted && !user.email ? ' has-error' : '')
             }
           >
             <label htmlFor="email">E-mail</label>
@@ -107,7 +107,7 @@ class RegisterPage extends React.Component<Props, State> {
           </div>
           <div
             className={
-              "form-group" + (submitted && !user.password ? " has-error" : "")
+              'form-group' + (submitted && !user.password ? ' has-error' : '')
             }
           >
             <label htmlFor="password">Password</label>
@@ -124,13 +124,13 @@ class RegisterPage extends React.Component<Props, State> {
           </div>
           <div
             className={
-              "form-group" +
+              'form-group' +
               (submitted &&
               (!passwordConfirmation ||
                 !user.username ||
                 passwordConfirmation === user.username)
-                ? " has-error"
-                : "")
+                ? ' has-error'
+                : '')
             }
           >
             <label htmlFor="passwordConfirmation">Password confirmation</label>
@@ -164,19 +164,19 @@ class RegisterPage extends React.Component<Props, State> {
           </div>
         </form>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state: any) => ({
   registering: state.registration
-});
+})
 
 const mapDispatchToProps = (dispatch: any) => ({
   register: (user: any) => dispatch(register(user))
-});
+})
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RegisterPage);
+)(RegisterPage)

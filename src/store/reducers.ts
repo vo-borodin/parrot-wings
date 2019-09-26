@@ -1,13 +1,15 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux'
 
-import { authentication } from "./auth/reducers";
-import { users } from "./users/reducers";
-import { alert } from "./alert/reducers";
+import { alertReducer } from './alert/reducers'
+import { appReducer } from './app/reducers'
+import { authReducer } from './auth/reducers'
+import { transactionsReducer } from './transactions/reducers'
 
 const rootReducer = combineReducers({
-  authentication,
-  users,
-  alert
-});
+  alertState: alertReducer,
+  appState: appReducer,
+  authState: authReducer,
+  transactionsState: transactionsReducer
+})
 
-export default rootReducer;
+export default rootReducer

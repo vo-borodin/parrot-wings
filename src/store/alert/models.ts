@@ -1,3 +1,8 @@
+export interface Alert {
+  alertType: string
+  message: string
+}
+
 export interface AlertState {
-  message?: string;
+  alert?: Alert
 }

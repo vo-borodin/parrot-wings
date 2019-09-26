@@ -1,9 +1,5 @@
 export interface AuthState {
-  loggedIn?: boolean;
-  user?: User;
-}
-
-export interface User {
-  email: string;
-  username: string;
+  isAuthenticated: boolean
+  authenticating: boolean
+  registering: boolean
 }

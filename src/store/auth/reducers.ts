@@ -1,35 +1,58 @@
-import * as actionTypes from "./actionTypes";
-import { AuthState } from "./models";
+import * as actionTypes from './actionTypes'
+import { AuthState } from './models'
 
-const item = localStorage.getItem("user");
-let user = item ? JSON.parse(item) : null;
-const initialState = user ? { loggedIn: true, user } : {};
+const jwtToken = localStorage.getItem('jwtToken')
+const initialState = {
+  isAuthenticated: Boolean(jwtToken),
+  authenticating: false,
+  registering: false
+}
 
-export function authentication(state: AuthState = initialState, action: any) {
+export const authReducer = (state: AuthState = initialState, action: any) => {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
       return {
-        loggingIn: true,
-        user: action.user
-      };
+        isAuthenticated: false,
+        authenticating: true,
+        registering: false
+      }
     case actionTypes.LOGIN_SUCCESS:
       return {
-        loggedIn: true,
-        user: action.user
-      };
+        isAuthenticated: true,
+        authenticating: false,
+        registering: false
+      }
     case actionTypes.LOGIN_FAILURE:
-      return {};
+      return {
+        isAuthenticated: false,
+        authenticating: false,
+        registering: false
+      }
     case actionTypes.REGISTER_REQUEST:
       return {
+        isAuthenticated: false,
+        authenticating: false,
         registering: true
-      };
+      }
     case actionTypes.REGISTER_SUCCESS:
-      return {};
+      return {
+        isAuthenticated: false,
+        authenticating: false,
+        registering: false
+      }
     case actionTypes.REGISTER_FAILURE:
-      return {};
+      return {
+        isAuthenticated: false,
+        authenticating: false,
+        registering: false
+      }
     case actionTypes.LOGOUT:
-      return {};
+      return {
+        isAuthenticated: false,
+        authenticating: false,
+        registering: false
+      }
     default:
-      return state;
+      return state
   }
 }
