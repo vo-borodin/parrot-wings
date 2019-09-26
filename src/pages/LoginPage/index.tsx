@@ -69,7 +69,9 @@ class LoginPage extends React.Component<Props, State> {
         <h2>Login</h2>
         <form name="form" onSubmit={this.handleSubmit}>
           <div
-            className={'form-group' + (submitted && !email ? ' has-error' : '')}
+            className={
+              'form-group' + (submitted && !email ? ' text-danger' : '')
+            }
           >
             <label htmlFor="email">E-mail</label>
             <input
@@ -80,12 +82,12 @@ class LoginPage extends React.Component<Props, State> {
               onChange={this.handleChangeEmail}
             />
             {submitted && !email && (
-              <div className="help-block">E-mail is required</div>
+              <small className="form-text">E-mail is required</small>
             )}
           </div>
           <div
             className={
-              'form-group' + (submitted && !password ? ' has-error' : '')
+              'form-group' + (submitted && !password ? ' text-danger' : '')
             }
           >
             <label htmlFor="password">Password</label>
@@ -97,7 +99,7 @@ class LoginPage extends React.Component<Props, State> {
               onChange={this.handleChangePassword}
             />
             {submitted && !password && (
-              <div className="help-block">Password is required</div>
+              <small className="form-text">Password is required</small>
             )}
           </div>
           <div className="form-group">

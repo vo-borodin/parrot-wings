@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { clear } from '../../store/alert/actions'
 import {
   getUserInfo,
   getAllUsers,
@@ -27,7 +26,6 @@ interface DispatchProps {
   getUserInfo: () => void
   getAllUsers: () => void
   commitTransaction: (name: string, amount: number) => void
-  clear: () => void
 }
 
 type Props = StateProps & DispatchProps
@@ -65,7 +63,7 @@ class HomePage extends React.Component<Props, State> {
   }
 
   onSubmitTransaction = () => {
-    const { balance, commitTransaction, clear } = this.props
+    const { balance, commitTransaction } = this.props
     const { payee, amount } = this.state
     if (payee && amount > 0 && amount <= balance) {
       commitTransaction(payee, amount)
@@ -129,8 +127,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   getUserInfo: () => dispatch(getUserInfo()),
   getAllUsers: () => dispatch(getAllUsers()),
   commitTransaction: (name: string, amount: number) =>
-    dispatch(commitTransaction(name, amount)),
-  clear: () => dispatch(clear())
+    dispatch(commitTransaction(name, amount))
 })
 
 export default connect(

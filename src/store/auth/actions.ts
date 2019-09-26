@@ -1,7 +1,6 @@
 import * as actionTypes from './actionTypes'
 import * as api from '../../api'
 import * as alertActions from '../alert/actions'
-import { history } from '../../helpers/history'
 
 export const login = (email: string, password: string) => {
   return (dispatch: any) => {
@@ -15,7 +14,6 @@ export const login = (email: string, password: string) => {
           type: actionTypes.LOGIN_SUCCESS
         })
         dispatch(alertActions.success('You are successfully authenticated'))
-        // history.push("/");
       },
       error => {
         dispatch({
@@ -27,26 +25,22 @@ export const login = (email: string, password: string) => {
   }
 }
 
-export const register = (user: any) => {
+export const register = (username: string, email: string, password: string) => {
   return (dispatch: any) => {
     dispatch({
-      type: actionTypes.REGISTER_REQUEST,
-      user
+      type: actionTypes.REGISTER_REQUEST
     })
 
-    api.register(user).then(
-      (id_token: string) => {
+    api.register(username, email, password).then(
+      () => {
         dispatch({
-          type: actionTypes.REGISTER_SUCCESS,
-          user: { ...user, token: id_token }
+          type: actionTypes.REGISTER_SUCCESS
         })
-        history.push('/login')
         dispatch(alertActions.success('Registration successful'))
       },
-      (error: Error) => {
+      error => {
         dispatch({
-          type: actionTypes.REGISTER_FAILURE,
-          error: error.toString()
+          type: actionTypes.REGISTER_FAILURE
         })
         dispatch(alertActions.error(error.toString()))
       }
