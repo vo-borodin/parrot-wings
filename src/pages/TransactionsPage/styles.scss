@@ -1,0 +1,16 @@
+.ReactTable {
+  .rt-thead {
+    [role='columnheader'] {
+      outline: 0;
+    }
+  }
+}
+
+ReactTable {
+  padding: 10px;
+}
+
+Paper {
+  margin: auto;
+  padding: 10px;
+}

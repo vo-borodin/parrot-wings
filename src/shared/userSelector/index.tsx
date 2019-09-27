@@ -200,6 +200,7 @@ const components = {
 }
 
 interface Props {
+  className?: string
   users: any[]
   onSelectItem: (item: any) => void
 }
@@ -225,7 +226,7 @@ export const UserSelector = (props: Props) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${props.className ? props.className : ''}`}>
       <NoSsr>
         <Select
           classes={classes}

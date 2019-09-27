@@ -3,7 +3,7 @@ import * as alertActions from '../alert/actions'
 import * as api from '../../api'
 
 export const fetchTransactions = () => {
-  ;(dispatch: any) => {
+  return (dispatch: any) => {
     dispatch({
       type: actionTypes.FETCH_TRANSACTIONS_REQUEST
     })
@@ -14,9 +14,6 @@ export const fetchTransactions = () => {
           type: actionTypes.FETCH_TRANSACTIONS_SUCCESS,
           transactions
         })
-        dispatch(
-          alertActions.success('Your transactions are fetched successfully')
-        )
       },
       error => {
         dispatch({

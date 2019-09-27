@@ -12,6 +12,7 @@ import { GlobalState } from './store/models'
 import { Alert } from './store/alert/models'
 
 import './App.css'
+import TransactionsPage from './pages/TransactionsPage'
 
 interface StateProps {
   alert?: Alert
@@ -36,18 +37,21 @@ class App extends React.Component<Props> {
     const { alert } = this.props
     return (
       <div className="jumbotron">
-        <div className="container">
-          <Router history={history}>
-            <>
-              <PrivateRoute exact path="/" component={HomePage} />
-              <Route path="/login" component={LoginPage} />
-              <Route path="/register" component={RegisterPage} />
-            </>
-          </Router>
-          {alert && (
-            <div className={`alert ${alert.alertType}`}>{alert.message}</div>
-          )}
-        </div>
+        {alert && (
+          <div className={`alert ${alert.alertType}`}>{alert.message}</div>
+        )}
+        <Router history={history}>
+          <>
+            <PrivateRoute exact path="/" component={HomePage} />
+            <PrivateRoute
+              exact
+              path="/transactions"
+              component={TransactionsPage}
+            />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/register" component={RegisterPage} />
+          </>
+        </Router>
       </div>
     )
   }

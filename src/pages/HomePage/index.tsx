@@ -1,29 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import {
-  getUserInfo,
-  getAllUsers,
-  commitTransaction
-} from '../../store/app/actions'
+import { getAllUsers, commitTransaction } from '../../store/app/actions'
 import { GlobalState } from '../../store/models'
-import { logout } from '../../store/auth/actions'
-import { UserSelector } from '../../shared'
+import { UserSelector, NavBar } from '../../shared'
 import { User } from '../../store/app/models'
-import NumberField from '../../shared/numberField'
+import { NumberField } from '../../shared'
 
 import './styles.scss'
 
 interface StateProps {
-  user?: User
   balance: number
   payees: User[]
   transactionCommiting: boolean
 }
 
 interface DispatchProps {
-  logout: () => void
-  getUserInfo: () => void
   getAllUsers: () => void
   commitTransaction: (name: string, amount: number) => void
 }
@@ -43,15 +35,8 @@ class HomePage extends React.Component<Props, State> {
     }
   }
 
-  onLogout = () => {
-    this.props.logout()
-    window.location.reload(true)
-  }
-
   componentDidMount() {
-    const { getUserInfo, getAllUsers } = this.props
-    getUserInfo()
-    getAllUsers()
+    this.props.getAllUsers()
   }
 
   onSelectPayee = (item: any) => {
@@ -81,29 +66,23 @@ class HomePage extends React.Component<Props, State> {
   }
 
   render() {
-    const { user, balance, payees } = this.props
+    const { payees } = this.props
 
     return (
-      <div className="home-page">
-        <div className="home-page__top-bar">
-          <div className="home-page__info">
-            <span>{`${user ? user.username : ''} | ${balance} PW`}</span>
-          </div>
-          <button className="btn btn-link" onClick={this.onLogout}>
-            Logout
-          </button>
-        </div>
-        <div className="home-page__form">
+      <div className="container">
+        <NavBar />
+        <div className="col-4">
           <UserSelector
+            className="my-4"
             users={payees.map((item: any) => ({
               label: item.name,
               value: item.id
             }))}
             onSelectItem={this.onSelectPayee}
           />
-          <NumberField onSetValue={this.onSetAmount} />
+          <NumberField className="my-4" onSetValue={this.onSetAmount} />
           <button
-            className="btn btn-primary"
+            className="btn btn-primary my-2"
             disabled={this.isButtonDisabled}
             onClick={this.onSubmitTransaction}
           >
@@ -116,15 +95,12 @@ class HomePage extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  user: state.appState.currentUser,
   balance: state.appState.balance,
   payees: state.appState.users,
   transactionCommiting: state.appState.transactionCommiting
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-  logout: () => dispatch(logout()),
-  getUserInfo: () => dispatch(getUserInfo()),
   getAllUsers: () => dispatch(getAllUsers()),
   commitTransaction: (name: string, amount: number) =>
     dispatch(commitTransaction(name, amount))
