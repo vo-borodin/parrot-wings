@@ -19,7 +19,7 @@ export const login = (email: string, password: string) => {
         dispatch({
           type: actionTypes.LOGIN_FAILURE
         })
-        dispatch(alertActions.error(error))
+        dispatch(alertActions.error(error.toString()))
       }
     )
   }
