@@ -1,6 +1,6 @@
 import { logout } from './auth'
 
-export const baseUrl = 'http://193.124.114.46:3001'
+export const baseUrl = 'https://193.124.114.46:3001'
 
 export const handleResponse = async (response: Response) => {
   const text = await response.text()
