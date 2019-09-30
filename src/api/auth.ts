@@ -4,7 +4,10 @@ import { baseUrl, handleResponse } from './shared'
 export const login = async (email: string, password: string) => {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    },
     body: JSON.stringify({ email, password })
   }
 
@@ -18,10 +21,17 @@ export const login = async (email: string, password: string) => {
   return resp
 }
 
-export const register = async (username: string, email: string, password: string) => {
+export const register = async (
+  username: string,
+  email: string,
+  password: string
+) => {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    },
     body: JSON.stringify({
       username,
       email,
@@ -43,6 +53,7 @@ export const getUserInfo = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
       Authorization: authHeader()
     }
   }
@@ -64,6 +75,7 @@ export const getAll = async () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
       Authorization: authHeader()
     },
     body: JSON.stringify({ filter: ' ' })
