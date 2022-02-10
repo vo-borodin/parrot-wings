@@ -13,7 +13,7 @@
     "@types/react-select": "^3.0.4",
     "@types/react-table": "^6.8.5",
     "@types/redux-logger": "^3.0.7",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-bootstrap-dialog": "^0.13.0",
